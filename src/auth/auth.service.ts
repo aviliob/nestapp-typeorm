@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
+import { IJwtPayload } from 'src/interfaces/user.interface';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
@@ -32,5 +33,9 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(user)
     };
+  }
+
+  decodeToken(token: string): IJwtPayload {
+    return this.jwtService.decode(token) as IJwtPayload;
   }
 }

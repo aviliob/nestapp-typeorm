@@ -17,3 +17,12 @@ export interface IRegisterRequest extends ILoginRequest {
   idAffiliate: number;
   idRole: number;
 }
+
+export interface IJwtPayload {
+  id: number;
+  email: string;
+  idPerson: number;
+  idAffiliate: number;
+  idRole: number;
+  createdAt: Date;
+}
