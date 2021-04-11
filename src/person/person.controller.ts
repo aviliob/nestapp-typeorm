@@ -10,7 +10,7 @@ export class PersonController {
 
   @UseGuards(JwtAuthGuard)
   @Get('info')
-  @Roles(RoleEnum.User)
+  @Roles(RoleEnum.Admin)
   getInfo(@Request() req: any) {
     return req.user;
   }

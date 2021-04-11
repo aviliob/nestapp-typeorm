@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { IJwtPayload } from 'src/interfaces/user.interface';
@@ -8,7 +9,8 @@ import { UserService } from 'src/user/user.service';
 export class AuthService {
   constructor(
     private userService: UserService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private configService: ConfigService
   ) { }
 
   async validateUser(email: string, pass: string): Promise<any> {
@@ -29,9 +31,10 @@ export class AuthService {
     return cleanUser;
   }
 
-  async getAccessToken(user: any) {
+  getAccessToken(user: any) {
+    const secret = this.configService.get('JWT_SECRET');
     return {
-      access_token: this.jwtService.sign(user)
+      access_token: this.jwtService.sign(user, { secret })
     };
   }
 
