@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { jwtConstants } from './app.constants';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { PersonModule } from './person/person.module';
 import { UserController } from './user/user.controller';
-import { LoginModule } from './user/user.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,9 +21,16 @@ import { LoginModule } from './user/user.module';
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true, // avoid this on prod
     }),
-    LoginModule
+    UserModule,
+    PersonModule,
+    AuthModule
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService],
+  controllers: [
+    AppController,
+    UserController
+  ],
+  providers: [
+    AppService,
+  ],
 })
 export class AppModule { }
